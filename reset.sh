@@ -1,7 +1,9 @@
 #!/bin/bash
 
-cf delete editor-v1 -f
-cf delete editor-v2 -f
-cf delete-route $CF_DOMAIN --hostname editor-v1 -f
-cf delete-route $CF_DOMAIN --hostname editor-v2 -f
-cf delete-route mesh.$CF_DOMAIN --hostname editor -f
+echo "Resetting counters . . ."
+
+export CF_DOMAIN=`cf curl /v2/domains | jq .resources[0].entity.name | tr -d '"'`
+
+curl -s editor-v1.$CF_DOMAIN/reset > /dev/null
+curl -s editor-v2.$CF_DOMAIN/reset > /dev/null
+echo "Done!"
