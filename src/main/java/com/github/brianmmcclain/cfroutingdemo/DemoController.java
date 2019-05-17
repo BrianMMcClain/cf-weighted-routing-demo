@@ -45,4 +45,10 @@ public class DemoController {
         this.hits = 0;
         return "Counter Reset";
     }
+
+    @GetMapping("/hits")
+    @ResponseBody
+    public String hits() {
+        return Integer.toString(this.hits);
+    }
 }
